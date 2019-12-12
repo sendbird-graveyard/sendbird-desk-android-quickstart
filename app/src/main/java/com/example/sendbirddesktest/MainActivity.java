@@ -13,6 +13,7 @@ import com.sendbird.desk.android.SendBirdDesk;
 import com.sendbird.desk.android.Ticket;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,81 +24,57 @@ public class MainActivity extends AppCompatActivity {
         SendBird.init("192F73AB-EED6-465B-9B77-1F34406B5658", this);
         SendBirdDesk.init();
 
-
+        // Connect to SendBird Chat
         SendBird.connect("test_user_1","ac029769b3f1091d7c292c192ce4b1246be17ffe", new SendBird.ConnectHandler() {
             @Override
             public void onConnected(User user, SendBirdException e) {
                 if (e != null) {
-                    Log.d("test", "mulgar ran into error connecting");
-
+                    Log.d("test", "Ran into error calling SendBird.connect() ");
                     return;
                 }
 
+                // Connect to SendBird Desk
                 SendBirdDesk.authenticate("test_user_1", "ac029769b3f1091d7c292c192ce4b1246be17ffe", new SendBirdDesk.AuthenticateHandler() {
                     @Override
                     public void onResult(SendBirdException e) {
-                        Map<String,String> Ticket1CustomFields = new HashMap<String, String>()
-                        {
-                            {
-                                put("1", "value1");
-                                put("2", "value2");
-                            }
-                        };
 
-
-                        Ticket.create("Ticket7", "test", null, Ticket1CustomFields, new Ticket.CreateHandler() {
+                        // Create Ticket
+                        Ticket.create("Ticket7", "test_user_1", new Ticket.CreateHandler() {
                             @Override
                             public void onResult(Ticket ticket, SendBirdException e) {
                                 if (e != null) {
                                     // Error handling.
-                                    Log.d("test", "mulgar ran into error creating ticket" + e.getMessage());
+                                    Log.d("test", "Ran into error calling Ticket.create() " + e.getMessage());
                                     return;
                                 }
 
-                                // Now you can send messages to the ticket by ticket.getChannel().sendUserMessage() or sendFileMessage().
-                                Log.d("test", "mulgar did not run into error creating ticket");
-                                ticket.getChannel().sendUserMessusage("testdsfdsa", new BaseChannel.SendUserMessageHandler() {
+                                // Send Message to Ticket (Without a message from a customer, a ticket will not be placed in the queue and
+                                // show on the Dashboard.
+                                ticket.getChannel().sendUserMessage("test message", new BaseChannel.SendUserMessageHandler() {
                                     @Override
                                     public void onSent(UserMessage userMessage, SendBirdException e) {
                                         if (e != null) {
                                             // Error handling.
-                                            Log.d("test", "mulgar ran into error sending message");
+                                            Log.d("test", "Ran into error calling sendUserMessage() " + e.getMessage());
 
                                             return;
                                         }
-
-                                        Log.d("test", "mulgar did not run into error sending message");
-
                                     }
                                 });
-
-
-
                             }
                         });
-                        /*
-                        Map<String,String> customFieldFilter = new HashMap<String, String>()
-                        {
-                            {
-                                put("Field1", "value1");
-                                put("Field2", "value2");
-                            }
-                        };
 
-                        Ticket.getClosedList(0, customFieldFilter, new Ticket.GetClosedListHandler() {
+                        // Retrieve previously closed tickets
+                        Ticket.getClosedList(0, new Ticket.GetClosedListHandler() {
                             @Override
                             public void onResult(List<Ticket> list, boolean b, SendBirdException e) {
-                                Log.d("test", "mulgar closed list" + String.valueOf(list.size()));
-                            }
-                        });
+                                Log.d("test", "Closed list size: " + String.valueOf(list.size()));
 
-                        Ticket.getOpenedList(0, customFieldFilter, new Ticket.GetOpenedListHandler() {
-                            @Override
-                            public void onResult(List<Ticket> list, boolean b, SendBirdException e) {
-                                Log.d("test", "mulgar opened list" + String.valueOf(list.size()));
+                                for (Ticket ticket  : list) {
+                                    Log.d("test", "Ticket Title: " + ticket.getTitle());
+                                }
                             }
                         });
-                        */
                     }
                 });
             }
