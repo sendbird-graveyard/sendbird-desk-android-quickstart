@@ -4,11 +4,11 @@
 This repo was made to share a barebones quickstart implementation of how to use SendBird Desk
 
 It goes through the steps of:
-Connecting to SendBird
-Connecting to SendBird Desk
-Creating a Ticket
-Sending a Message to a Ticket
-Retrieving Closed Tickets
+- Connecting to SendBird
+- Connecting to SendBird Desk
+- Creating a Ticket
+- Sending a Message to a Ticket
+- Retrieving Closed Tickets
 
 
 # How to Run
