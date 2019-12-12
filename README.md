@@ -1,7 +1,7 @@
 # sendbird-desk-android-quickstart
 
 # Description
-This repo was made to share a barebones quickstart implementation of how to use SendBird Desk
+This repo was made to share a barebones quickstart implementation of how to use SendBird Desk.
 
 It goes through the steps of:
 - Connecting to SendBird
