@@ -15,3 +15,7 @@ It goes through the steps of:
 1) Import this project into Android Studio 3.5.3+
 2) Build with Gradle
 3) Run on Android Emulator
+
+# SDK Documentation
+Please see the following link where the documentation is maintained:
+https://github.com/sendbird/SendBird-Desk-Android
