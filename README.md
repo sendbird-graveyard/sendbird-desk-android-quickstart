@@ -10,6 +10,8 @@ It goes through the steps of:
 - Sending a Message to a Ticket
 - Retrieving Closed Tickets
 
+Please see the code in MainActivity.java:
+https://github.com/sendbird/sendbird-desk-android-quickstart/blob/master/app/src/main/java/com/example/sendbirddesktest/MainActivity.java
 
 # How to Run
 1) Import this project into Android Studio 3.5.3+
